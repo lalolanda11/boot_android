@@ -1,0 +1,5 @@
+
+ADB - - -	Para controlar el celular vía USB	Instalar ADB
+Apksigner - - - 	Para verificar la firma de un APK	Viene incluido en el Android SDK dentro de build-tools
+Python 3	
+APK legítimo	- - -  El que vas a usar para reemplazar	Ya lo subiste: GooglePay.apk
