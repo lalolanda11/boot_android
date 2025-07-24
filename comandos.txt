@@ -1,0 +1,96 @@
+#con este comando te dice la actividad que se ejecuta cuan do se abre la app
+adb shell cmd package resolve-activity --brief com.android.chrome
+com.android.chrome/com.google.android.apps.chrome.Main
+
+
+#abre la aplicacion 
+adb shell am start -n com.android.chrome/com.google.android.apps.chrome.Main
+
+#otra opcion del comando 
+adb shell monkey -p com.android.chrome -c android.intent.category.LAUNCHER 1
+
+#buscar paquetes 
+adb shell pm list packages | grep nombre
+
+adb shell monkey -p com.whatsapp -c android.intent.category.LAUNCHER 1
+
+adb shell pm list packages
+
+adb shell dumpsys package com.whatsapp | grep -A 1 MAIN
+
+adb shell am start -n com.whatsapp/.Main
+
+
+########################################################
+
+#extraer la aplicacion instalada
+adb shell pm path com.ejemplo.app
+
+#la salida debe de ser asi
+package:/data/app/~~xyz123==/com.ejemplo.app-1/base.apk
+
+#extrae los paquetes de la app
+adb pull /data/app/~~xyz123==/com.ejemplo.app-1/base.apk
+
+
+##descompilar la apk
+
+apktool d base.apk -o app_descompilada
+
+###otra opcion
+jadx-gui base.apk
+jadx -d salida base.apk
+
+
+
+
+############### Ejemplo de posibles vuln en riesgo
+<activity android:name=".AdminPanel"
+    android:exported="true"
+    android:permission=""/>
+
+
+
+
+
+
+
+
+
+
+#####Esta son las posibles vulneralidades 
+
+Claves/API keys hardcodeadas
+Actividades o servicios exportados sin protección
+WebView inseguros
+Uso de addJavascriptInterface
+Bases de datos SQLite sin cifrado
+Certificados y validación de SSL mal implementada
+Comunicación en texto plano (HTTP)
+
+
+
+
+
+
+####Herramientas posibles 
+
+| Herramienta    | Descripción                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| **MobSF**      | Análisis estático/dinámico automático de APKs                     |
+| **Frida**      | Instrumentación dinámica (modificar apps en ejecución)            |
+| **Burp Suite** | Interceptar tráfico (útil para apps que se comunican con backend) |
+| **Objection**  | Framework para testeo dinámico (usando Frida)                     |
+| **Drozer**     | Pruebas de seguridad de componentes exportados                    |
+
+
+
+
+
+
+###Asi seria el flujo de trabajo 
+adb shell pm path com.whatsapp
+adb pull /data/app/.../base.apk
+apktool d base.apk -o whatsapp_apktool
+jadx-gui base.apk
+
